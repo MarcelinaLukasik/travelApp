@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
+<?import javafx.scene.control.ScrollPane?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.travel_app_client.TravelController">
     <padding>
@@ -13,7 +14,9 @@
 
     <Label fx:id="statusLabel" text="Loading offers..." />
 
-    <VBox fx:id="offersVBox" spacing="10.0" />
+    <ScrollPane fitToWidth="true" fitToHeight="false">
+        <VBox fx:id="offersVBox" spacing="10.0"/>
+    </ScrollPane>
 
 </VBox>
 

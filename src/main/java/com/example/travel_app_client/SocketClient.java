@@ -1,9 +1,10 @@
 package com.example.travel_app_client;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.List;
+
+
 
 public class SocketClient {
 
@@ -13,6 +14,7 @@ public class SocketClient {
     public SocketClient(String serverHost, int serverPort) {
         this.serverHost = serverHost;
         this.serverPort = serverPort;
+
     }
 
     public List<Offer> fetchOffers() {
@@ -22,15 +24,13 @@ public class SocketClient {
         ObjectInputStream ois = null;
 
         try {
-            // Establish socket connection to the server
-            InetAddress host = InetAddress.getLocalHost();
+
             socket = new Socket(serverHost, serverPort);
 
             oos = new ObjectOutputStream(socket.getOutputStream());
             System.out.println("Sending request to fetch offers");
             oos.writeObject("fetchOffers");
 
-            // Read the server response
             ois = new ObjectInputStream(socket.getInputStream());
 
             try {
@@ -60,5 +60,27 @@ public class SocketClient {
             }
         }
         return offers;
+    }
+    public void bookOffer(int id) {
+        try {
+              // Ensure the socket is connected
+            Socket socket = new Socket(serverHost, serverPort);
+
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            System.out.println("Sending integer to the server");
+
+            oos.writeObject("bookOffer");
+            oos.writeInt(id);
+
+            String username = "tester";
+            oos.writeUTF(username);
+            oos.flush();
+            // Optionally, read the response from the server
+//            String response = (String) ois.readObject();  // Read response from the server
+//            System.out.println("Server response: " + response);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
